@@ -1,0 +1,96 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Basic Styles for Navbar */
+.navbar {
+    background-color: #000; /* Add a semi-transparent background for better readability */
+    color: #fff; /* Text color for navbar items */
+    display: flex; /* Use flexbox to arrange items horizontally */
+    justify-content: space-between; /* Push items to the ends of the container */
+    align-items: center; /* Center items vertically */
+    padding: 20px 30px; /* Add some padding to the navbar */
+}
+
+
+.navbar a {
+    text-decoration: none;
+    color: #fff;
+}
+
+/* Styles for the company name */
+.navbar-home {
+    font-size: 24px; /* Increase font size for the company name */
+    font-weight: bold; /* Make it bold */
+}
+
+/* Styles for the navigation items */
+.navbar-list {
+    list-style-type: none; /* Remove bullet points from the list */
+    margin: 0;
+    padding: 0;
+    display: flex; /* Display items horizontally */
+}
+
+.navbar-list li {
+    margin-right: 20px; /* Add spacing between navbar items */
+}
+
+/* Styles for the navigation items with a more professional look */
+.navbar-list li a {
+    text-decoration: none;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Use a professional font */
+    font-size: 18px; /* Adjust font size */
+    padding: 10px 15px; /* Add padding for a comfortable click area */
+    position: relative;
+    transition: transform 0.3s ease, color 0.3s ease; /* Add smooth transitions */
+}
+
+/* Hover effect for navbar items */
+.navbar-list li a:hover {
+    transform: scale(1.1); /* Slightly scale on hover for a subtle effect */
+    color: #ff6600; /* Change text color on hover */
+}
+
+
+/* Add a border-bottom to the currently active page */
+.nav-item1.active, .nav-item2.active, .nav-item3.active, .nav-item4.active, .nav-item5.active { 
+    border-bottom: 2px solid #ff6600; /* Add a bottom border with a different color to the active page */ 
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+footer {
+    background-color: #000; /* Black background */
+    color: white;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* No need for height: 100%; */
+}
+
+.social-icons a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    margin: 0 10px;
+}
+
+.social-icons a:hover {
+    color: #007bff;
+}
