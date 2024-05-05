@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyberburgs - GPA_Calc</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="icon" type="image/jpg" href="logo.jpg">
+    <link rel="stylesheet" href="GPA_Calc.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a class="navbar-home" href="index.html"> cyberburgs </a>
+        <div class="navbar-items" id="navbaritem">
+          <ul class="navbar-list">
+            <li class="nav-item1">
+              <a class="navitem1" href="about.html"> About </a>
+            </li>
+            <li class="nav-item2">
+              <a class="navitem2" href="services.html"> Services </a>
+            </li>
+            <li class="nav-item3">
+              <a class="navitem3" href="projects.html"> Projects </a>
+            </li>
+            <li class="nav-item4">
+              <a class="navitem4" href="blogs.html"> Blogs </a>
+            </li>
+            <li class="nav-item5">
+              <a class="navitem5" href="contact.html"> Contact </a>
+            </li>
+          </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div id="headingContainer">
+            <h1>GPA Calculation!</h1>
+        </div>
+        <div id="inputContainer">
+            <div class="course-input-container">
+                <label for="numCourses">Number of Courses</label>
+                <input type="number" id="numCourses" name="numCourses" min="1" max="7" required>
+            </div>
+        </div>
+        <div id="buttonContainer">
+            <button id="generateFields" onclick="generateCourseFields()">Generate Fields</button>
+        </div>
+        <div id="courseFieldsContainer"></div> 
+    </main>
+
+    <script>
+   function generateCourseFields() {
+    var numCourses = document.getElementById('numCourses').value;
+    var container = document.getElementById('courseFieldsContainer');
+    var inputContainer = document.querySelector('.course-input-container');
+
+    container.innerHTML = ''; // Clear previous fields
+
+    // Check if the number of courses is within the allowed range
+    if (numCourses && numCourses > 0 && numCourses <= 7) {
+        inputContainer.style.display = 'none';
+        document.getElementById('generateFields').style.display = 'none';
+
+        // The rest of your code to generate course fields
+        // ...
+    } 
+    else {
+        alert('Please enter a valid number of courses (1-7).');
+    }
+
+    numCourses = Number(numCourses);
+    if (numCourses && numCourses > 0 && numCourses <= 7) {
+        inputContainer.style.display = 'none';
+        document.getElementById('generateFields').style.display = 'none';
+
+        for (var i = 0; i < numCourses; i++) {
+            var courseDiv = document.createElement('div');
+            courseDiv.className = 'course-container';
+
+            var gradeLabel = document.createElement('label');
+            gradeLabel.textContent = 'Grade';
+            courseDiv.appendChild(gradeLabel);
+
+            var gradeSelect = document.createElement('select');
+            gradeSelect.name = 'gradeSelect';
+            var grades = ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'F'];
+            grades.forEach(function(grade) {
+                var option = document.createElement('option');
+                option.value = grade;
+                option.textContent = grade;
+                gradeSelect.appendChild(option);
+            });
+            courseDiv.appendChild(gradeSelect);
+
+            var creditsLabel = document.createElement('label');
+            creditsLabel.textContent = 'Credits';
+            courseDiv.appendChild(creditsLabel);
+
+            var creditsInput = document.createElement('input');
+            creditsInput.type = 'number';
+            creditsInput.name = 'creditsInput';
+            creditsInput.min = '0';
+            courseDiv.appendChild(creditsInput);
+
+            container.appendChild(courseDiv);
+        }
+
+        // Calculate GPA button
+        var calculateButton = document.createElement('button');
+        calculateButton.textContent = 'Calculate GPA';
+        calculateButton.id = 'calculateGPA';
+        calculateButton.addEventListener('click', calculateGPA);
+        container.appendChild(calculateButton);
+
+        // GPA Output Bar
+        var gpaOutput = document.createElement('div');
+        gpaOutput.id = 'gpaOutput';
+        gpaOutput.textContent = 'GPA ';
+        gpaOutput.style.display = 'none'; // Hide initially
+        container.appendChild(gpaOutput);
+    } 
+    else {
+        alert('Please enter a valid number of courses.');
+    }
+}
+
+function calculateGPA() {
+    var gradeSelects = document.querySelectorAll('select[name="gradeSelect"]');
+    var creditsInputs = document.querySelectorAll('input[name="creditsInput"]');
+    var totalQualityPoints = 0;
+    var totalCredits = 0;
+
+    gradeSelects.forEach(function(gradeSelect, index) {
+        var gradeValue = gradeSelect.value;
+        var credits = parseFloat(creditsInputs[index].value);
+        var qualityPoints = getQualityPoints(gradeValue);
+        if (!isNaN(qualityPoints) && !isNaN(credits)) {
+            totalQualityPoints += qualityPoints * credits;
+            totalCredits += credits;
+        }
+    });
+
+    var gpa = totalCredits > 0 ? totalQualityPoints / totalCredits : 0;
+
+    var gpaOutput = document.getElementById('gpaOutput');
+    gpaOutput.style.display = 'block'; // Make the GPA output visible
+    gpaOutput.textContent = 'GPA ' + gpa.toFixed(2);
+}
+
+function getQualityPoints(grade) {
+    var qualityPointsMap = {
+        'A': 4.00, 'A-': 3.67, 'B+': 3.33, 'B': 3.00, 'B-': 2.67,
+        'C+': 2.33, 'C': 2.00, 'C-': 1.67, 'D+': 1.33, 'D': 1.00, 'F': 0.00
+    };
+    return qualityPointsMap[grade] || 0;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('generateFields').addEventListener('click', generateCourseFields);
+});
+
+    </script>
+       
+    <footer class="footer">
+      <div class="social-links">
+        <a href="https://www.instagram.com/cyberburgs" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="https://github.com/CYBURGS" class="social-icon"><i class="fab fa-github"></i></a>
+        <a href="https://twitter.com/cyberburgs" class="social-icon"><i class="fab fa-twitter-square"></i></a>
+        <a href="https://www.linkedin.com/in/cyber-burgs-8696482b2/" class="social-icon"><i class="fab fa-linkedin"></i></a>
+      </div>
+      
+      <div class="footer-links">
+        <a href="/privacy" class="footer-link" id="privacy-policy">Privacy Policy</a>
+        <span>|</span>
+        <a href="/terms" class="footer-link" id="terms-use">Terms of Use</a>
+        <span>|</span>
+        <a href="/disclaimer" class="footer-link" id="disclaimer">Disclaimer</a>
+      </div>
+      <div class="copy-right">
+        © cyberburgs
+      </div>
+    </footer>
+</body>
+</html>
