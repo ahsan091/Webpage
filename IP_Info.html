@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./IP_Info.css">
+    <title> Cyberburgs - IP_Location </title>
+</head>
+<body>
+    <div>
+        <h1>IP Geolocation Finder</h1>
+        <input
+            type="text"
+            placeholder="Enter IP address"
+        />
+        <button onClick={handleFindLocation}>Find</button>
+    </div>
+
+    <script>
+        const API_KEY = 'f8bed403a3b7fc';
+
+        function findLocation() {
+            const ipAddress = document.getElementById('ipInput').value.trim();
+            if (!ipAddress) {
+                alert('Please enter a valid IP address.');
+                return;
+            }
+
+            const url = `https://ipapi.co/${ipAddress}/json/?key=${API_KEY}`;
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch data: ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayData(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to retrieve location data!');
+                });
+        }
+
+        function displayData(data) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `
+                <p>IP: ${data.ip}</p>
+                <p>City: ${data.city}</p>
+                <p>Region: ${data.region}</p>
+                <p>Country: ${data.country_name}</p>
+                <p>Postal Code: ${data.postal}</p>
+                <p>Latitude and Longitude: ${data.latitude}, ${data.longitude}</p>
+                <p>ISP: ${data.org}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
